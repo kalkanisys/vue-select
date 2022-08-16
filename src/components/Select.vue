@@ -3,7 +3,7 @@
 </style>
 
 <template>
-  <div :dir="dir" class="v-select" :class="stateClasses">
+  <div :dir="dir" class="v-select" :class="[stateClasses, $props.themeClass]">
     <slot name="header" v-bind="scope.header" />
     <div
       :id="`vs${uid}__combobox`"
@@ -90,6 +90,7 @@
         :key="`vs${uid}__listbox`"
         v-append-to-body
         class="vs__dropdown-menu"
+        :class="[$props.themeClass]"
         role="listbox"
         tabindex="-1"
         @mousedown.prevent="onMousedown"
@@ -155,6 +156,13 @@ export default {
   mixins: [pointerScroll, typeAheadPointer, ajax],
 
   props: {
+    /**
+     * Contains the theme wrapper class to append at top to allow to customize
+     * @type {Object||String||null}
+     */
+    // eslint-disable-next-line vue/require-default-prop,vue/require-prop-types
+    themeClass: [String, Object],
+
     /**
      * Contains the currently selected value. Very similar to a
      * `value` attribute on an <input>. You can listen for changes
